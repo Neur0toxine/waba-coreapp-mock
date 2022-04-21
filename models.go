@@ -110,6 +110,104 @@ type Message struct {
 	Interactive   *MessageInteractive `json:"interactive,omitempty"`
 }
 
+type InboundMessage struct {
+	Message
+	Button    *InboundMessageButton   `json:"button,omitempty"`
+	Context   *InboundMessageContext  `json:"context,omitempty"`
+	From      string                  `json:"from,omitempty"`
+	ID        string                  `json:"id,omitempty"`
+	Identity  *InboundMessageIdentity `json:"identity,omitempty"`
+	Timestamp string                  `json:"timestamp,omitempty"`
+	System    *MessageSystem          `json:"system,omitempty"`
+	Voice     *MessageMedia           `json:"voice,omitempty"`
+	Referral  *Referral               `json:"referral,omitempty"`
+	Errors    []InboundError          `json:"errors,omitempty"`
+}
+
+type InboundWebhook struct {
+	Contacts []InboundContact `json:"contacts,omitempty"`
+	Messages []InboundMessage `json:"messages,omitempty"`
+	Statuses []InboundStatus  `json:"statuses,omitempty"`
+	Errors   []InboundError   `json:"errors,omitempty"`
+}
+
+type InboundContact struct {
+	Profile *Profile `json:"profile,omitempty"`
+	WaID    string   `json:"wa_id,omitempty"`
+}
+
+type InboundMessageButton struct {
+	Payload string `json:"payload,omitempty"`
+	Text    string `json:"text,omitempty"`
+}
+
+type InboundMessageIdentity struct {
+	Acknowledged     string `json:"acknowledged,omitempty"`
+	CreatedTimestamp string `json:"created_timestamp,omitempty"`
+	Hash             string `json:"hash,omitempty"`
+}
+
+type InboundMessageContext struct {
+	From                string   `json:"from,omitempty"`
+	ID                  string   `json:"id,omitempty"`
+	GroupID             string   `json:"group_id,omitempty"`
+	Mentions            []string `json:"mentions,omitempty"`
+	Forwarded           bool     `json:"forwarded,omitempty"`
+	FrequentlyForwarded bool     `json:"frequently_forwarded,omitempty"`
+}
+
+type InboundStatus struct {
+	Conversation *InboundStatusConversation `json:"conversation,omitempty"`
+	ID           string                     `json:"id,omitempty"`
+	Pricing      *InboundStatusPricing      `json:"pricing,omitempty"`
+	RecipientID  string                     `json:"recipient_id,omitempty"`
+	Status       string                     `json:"status,omitempty"`
+	Timestamp    json.Number                `json:"timestamp,omitempty"`
+	Type         string                     `json:"type,omitempty"`
+}
+
+type InboundStatusPricing struct {
+	Billable     bool   `json:"billable,omitempty"`
+	PricingModel string `json:"pricing_model,omitempty"`
+}
+
+type InboundStatusConversation struct {
+	ID                  string                          `json:"id,omitempty"`
+	Origin              InboundStatusConversationOrigin `json:"origin,omitempty"`
+	ExpirationTimestamp json.Number                     `json:"expiration_timestamp,omitempty"`
+}
+
+type InboundStatusConversationOrigin struct {
+	Type string `json:"type,omitempty"`
+}
+
+type InboundError struct {
+	Code    int    `json:"code,omitempty"`
+	Details string `json:"details,omitempty"`
+	Title   string `json:"title,omitempty"`
+}
+
+type Referral struct {
+	Headline   string        `json:"headline,omitempty"`
+	Body       string        `json:"body,omitempty"`
+	SourceType string        `json:"source_type,omitempty"`
+	SourceID   string        `json:"source_id,omitempty"`
+	SourceURL  string        `json:"source_url,omitempty"`
+	Image      *MessageMedia `json:"image,omitempty"`
+	Video      *MessageMedia `json:"video,omitempty"`
+}
+
+type MessageSystem struct {
+	Body     string `json:"body,omitempty"`
+	NewWaID  string `json:"new_wa_id,omitempty"`
+	Type     string `json:"type,omitempty"`
+	Identity string `json:"identity,omitempty"`
+}
+
+type Profile struct {
+	Name string `json:"name,omitempty"`
+}
+
 type MessagesResponse struct {
 	BaseResponse
 	Messages []IDModel `json:"messages,omitempty"`

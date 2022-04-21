@@ -1,7 +1,9 @@
 package main
 
 import (
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mkideal/cli"
@@ -21,6 +23,8 @@ func main() {
 		if argv.Verbose {
 			gin.SetMode(gin.DebugMode)
 		}
+
+		http.DefaultClient.Timeout = time.Second * 30
 
 		return NewServer().Run(argv.Address)
 	}))
